@@ -1,0 +1,21 @@
+{
+  "backend/main.mo": "Empty Motoko actor with no functions or state.",
+  "feature_evidence.json": "Feature evidence report listing implemented features, associated files, components, and test IDs.",
+  "frontend-file-summaries.txt": "Prewritten summaries describing the purpose of each frontend file in the project.",
+  "frontend/index.css": "Tailwind base styles plus custom CSS variables for light/dark themes and global UI styling.",
+  "frontend/index.html": "Base HTML entry point mounting the React app and loading main.tsx.",
+  "frontend/src/App.tsx": "Main React layout with header, sidebar navigation, documentation sections, and OTP playground integration.",
+  "frontend/src/components/CodeBlock.tsx": "Simple code block renderer showing labeled, scrollable code snippets.",
+  "frontend/src/components/DocSection.tsx": "Renders a documentation section with paragraphs, lists, alerts, code blocks, and tables.",
+  "frontend/src/docs/docsContent.ts": "Defines documentation section schema and the full content for all app documentation topics.",
+  "frontend/src/features/playground/clipboard.ts": "Implements browser clipboard copy with fallback and optional timed auto-clear behavior.",
+  "frontend/src/features/playground/otpExtraction.ts": "Extracts 4–8 digit OTP codes from messages using regex and heuristics to filter valid candidates.",
+  "frontend/src/features/playground/OtpPlayground.tsx": "UI component to test OTP extraction, copy to clipboard, and clipboard auto-clear settings using sample messages.",
+  "frontend/src/features/playground/useClipboardSettings.ts": "React hook that stores and retrieves clipboard auto-clear delay settings in localStorage.",
+  "frontend/src/hooks/useActor.ts": "Creates and caches an authenticated or anonymous backend actor and refreshes dependent queries when identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides Internet Identity authentication state, login/logout handling, and identity persistence via AuthClient.",
+  "frontend/src/index.css": "Tailwind base styles plus custom color variables, dark mode themes, and scrollbar/UI styling.",
+  "frontend/src/main.tsx": "App entry point initializing React, React Query, Internet Identity provider, and global styles.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending theme colors, radius, animations, and enabling typography and container query plugins.",
+  "project_state.json": "Defines project state and requirements for building an offline, privacy-compliant Android OTP auto-copy app using SMS User Consent/Retriever APIs. Lists architecture notes, existing features, and design constraints for documentation, platform limitations, and an OTP extraction playground."
+}

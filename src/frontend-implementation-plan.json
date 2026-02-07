@@ -1,0 +1,140 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "OTP Auto Copy Documentation Hub + Offline OTP Playground",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a navigable documentation UI that presents all eight required deliverables (architecture, permissions, OTP detection/rationale, regex/heuristics, Kotlin snippets, UI specs, compliance checklist, privacy outline).",
+      "acceptanceCriteria": [
+        "All eight deliverables are present and easy to navigate (e.g., top-level nav or sidebar with anchors).",
+        "All user-facing text is in English.",
+        "Kotlin code snippets are formatted for readability (monospace blocks) and include the requested areas: detection, regex, clipboard, auto-clear, and screen outlines.",
+        "The compliance checklist includes clear items tied to avoiding READ_SMS, using User Consent/Retriever APIs, data minimization, and disclosure expectations."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the main documentation hub page as a single-page experience with a left sidebar (or top nav) linking to anchored sections for all eight deliverables. Use the shadcn-ui component library (e.g., Card/Separator/ScrollArea) to provide a professional documentation layout. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/docs/docsContent.ts",
+          "operation": "create",
+          "description": "Add the full English documentation source content for the eight deliverables (architecture, permissions, OTP detection + policy rationale, regex/extraction + heuristics, Kotlin snippets, UI screen specs, Play compliance checklist, privacy policy outline) in a structured format consumable by the docs page (e.g., section objects with ids/titles/body/code blocks)."
+        },
+        {
+          "path": "frontend/src/components/DocSection.tsx",
+          "operation": "create",
+          "description": "Create a reusable documentation section renderer that supports headings, paragraphs, lists, and code blocks with consistent typography and spacing. Use shadcn-ui components where appropriate to standardize content presentation. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/CodeBlock.tsx",
+          "operation": "create",
+          "description": "Create a code block component for Kotlin snippets using semantic pre/code with monospace styling and horizontal scrolling, ensuring readability across desktop/mobile."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add a clearly labeled “Platform & Limitations” documentation section distinguishing native Android capabilities from this web app’s capabilities.",
+      "acceptanceCriteria": [
+        "The documentation includes a clearly labeled section that distinguishes native Android capabilities from web app capabilities.",
+        "The limitation statement is unambiguous about SMS access and Android-only APIs."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/docs/docsContent.ts",
+          "operation": "modify",
+          "description": "Add a dedicated 'Platform & Limitations' section explicitly stating that automatic SMS detection and Android SMS User Consent API / SMS Retriever API require a native Android app and cannot run in a browser-based React app."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the 'Platform & Limitations' section into the documentation navigation (sidebar/top nav) and ensure its anchor is reachable and clearly labeled."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement an offline-only OTP extraction playground with extract/copy actions and a configurable clipboard auto-clear timer (15s/30s/60s/never).",
+      "acceptanceCriteria": [
+        "Given an input containing a 4–8 digit OTP, the UI extracts and displays the OTP.",
+        "Non-OTP input does not produce a code and clearly indicates no OTP was detected.",
+        "Copy action places the OTP on the clipboard and shows feedback text exactly: “OTP copied”.",
+        "If auto-clear is enabled, the clipboard is cleared after the configured duration (best-effort in-browser) without requiring network access.",
+        "No network calls are made by this feature."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/playground/OtpPlayground.tsx",
+          "operation": "create",
+          "description": "Create the playground UI: SMS message text input, 'Extract OTP' action, extracted OTP display, 'Copy OTP' action with feedback text exactly 'OTP copied', and a setting control for auto-clear delay (15s/30s/60s/never). Use shadcn-ui form controls/buttons for consistent UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/playground/otpExtraction.ts",
+          "operation": "create",
+          "description": "Implement OTP extraction logic for 4–8 digits plus non-OTP ignoring heuristics (best-effort) used by the playground; keep logic pure and offline (no side effects, no network)."
+        },
+        {
+          "path": "frontend/src/features/playground/clipboard.ts",
+          "operation": "create",
+          "description": "Implement clipboard copy and best-effort clipboard clearing after a configured delay using browser APIs; ensure the timer can be canceled/updated when the setting changes."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the OTP playground into the main documentation experience as a dedicated section (anchored) or an in-page panel, so it is reachable from the same navigation as the docs."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Enforce offline-only behavior for OTP handling: no network calls/analytics, no OTP logging, no OTP persistence; only persist non-sensitive preferences.",
+      "acceptanceCriteria": [
+        "No OTP values are written to any persistent storage.",
+        "No OTP values are sent over the network.",
+        "No console logging includes OTP content.",
+        "Settings persistence (if implemented) contains only non-sensitive preferences."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/playground/useClipboardSettings.ts",
+          "operation": "create",
+          "description": "Create a small settings hook that persists only non-sensitive preferences (clipboard auto-clear delay) to localStorage; explicitly exclude OTP content from persistence."
+        },
+        {
+          "path": "frontend/src/features/playground/OtpPlayground.tsx",
+          "operation": "modify",
+          "description": "Ensure OTP values are stored only in component state (not persisted), avoid any console logging of OTP content, and do not introduce any network calls; use the settings hook only for non-sensitive preferences."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the app's documentation and playground do not introduce network-dependent behavior for OTP extraction/copying (no HTTP calls, analytics SDKs, or remote logging in these flows)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Apply a cohesive, professional security/privacy-focused theme across docs and playground without using a blue/purple primary palette.",
+      "acceptanceCriteria": [
+        "Theme is applied consistently across navigation, headings, code blocks, and forms.",
+        "Primary palette is not blue/purple.",
+        "Layout is readable and looks production-quality (clear hierarchy, spacing, accessible contrast)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and Tailwind base layers, defining a consistent theme via CSS variables (shadcn-ui theme tokens) using a non-blue/non-purple primary palette (e.g., green/amber/neutral). Ensure typography and code block styling are readable and consistent. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply the theme consistently in the main layout: clear hierarchy for headings, consistent spacing, accessible contrast, and cohesive styling for navigation, documentation content, code blocks, and the playground form elements. Use shadcn-ui layout primitives where applicable. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

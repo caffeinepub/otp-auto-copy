@@ -1,0 +1,11 @@
+{
+  "frontend/src/App.tsx": "Main application component with sticky header, sidebar navigation, documentation sections, OTP playground, and footer with smooth scrolling between anchored sections.",
+  "frontend/src/components/DocSection.tsx": "Reusable documentation section renderer that displays various content types (paragraphs, headings, lists, code blocks, alerts, tables) with consistent styling using shadcn/ui components.",
+  "frontend/src/components/CodeBlock.tsx": "Code block component with language label and monospace formatting for displaying Kotlin and other code snippets with horizontal scrolling support.",
+  "frontend/src/docs/docsContent.ts": "Complete documentation content for all eight deliverables including architecture, permissions, OTP detection, regex logic, Kotlin code samples, UI screens, compliance checklist, privacy policy, and platform limitations section.",
+  "frontend/src/features/playground/OtpPlayground.tsx": "Interactive OTP extraction playground with SMS message input, extract/copy actions, sample messages, extracted OTP display with \"OTP copied\" feedback, and configurable auto-clear clipboard settings.",
+  "frontend/src/features/playground/otpExtraction.ts": "Pure OTP extraction logic implementing regex patterns and heuristics to detect 4-8 digit OTP codes while filtering out non-OTP numbers like dates, phone numbers, and sequential digits.",
+  "frontend/src/features/playground/clipboard.ts": "Browser-based clipboard operations with modern Clipboard API and fallback support, plus best-effort auto-clear scheduling with timeout management.",
+  "frontend/src/features/playground/useClipboardSettings.ts": "React hook for managing non-sensitive clipboard preferences (auto-clear delay) with localStorage persistence, explicitly excluding any OTP content.",
+  "frontend/src/index.css": "Global styles with emerald/green security-focused theme using OKLCH color system, custom scrollbar styling, smooth scrolling, and code block formatting for both light and dark modes."
+}

@@ -1,0 +1,89 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-07T07:53:04.029Z",
+  "summary": "The diff adds a React documentation hub with sidebar navigation, a dedicated “Platform & Limitations” section, an OTP extraction playground (extract/copy + clipboard auto-clear scheduling), and a green/emerald privacy-focused theme. However, some BuildRequest acceptance criteria cannot be confirmed from the truncated diffs, and several unrelated/auth/network-capable features were added that were not requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "All eight documentation deliverables are present (architecture, permissions, OTP detection + rationale, regex/heuristics, Kotlin snippets, UI screen specs, compliance checklist, privacy policy outline) and easy to navigate.",
+      "reason": "Navigation items for all deliverables exist, but the actual content for most sections is truncated in the diff; only the Overview and Platform & Limitations sections are shown with partial content, so the presence/coverage of the remaining deliverables cannot be verified from the provided evidence.",
+      "evidence": [
+        "frontend/src/App.tsx (truncated) — navItems include all sections",
+        "frontend/src/docs/docsContent.ts (truncated) — shows Overview and Platform & Limitations; remainder truncated"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Non-OTP input does not produce a code and clearly indicates no OTP was detected.",
+      "reason": "The playground component is truncated right after the extracted OTP rendering branch begins; there is no visible evidence of a specific UI state/message for the 'no OTP detected' case.",
+      "evidence": [
+        "frontend/src/features/playground/OtpPlayground.tsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Include a user-configurable auto-clear clipboard timer setting (e.g., 15s/30s/60s/never).",
+      "reason": "The playground imports Select components and uses a stored clearDelay, but the truncated file does not show the actual Select options (15/30/60/never) rendered in the UI.",
+      "evidence": [
+        "frontend/src/features/playground/OtpPlayground.tsx (truncated)",
+        "frontend/src/features/playground/useClipboardSettings.ts"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity authentication provider and identity management hooks added to the frontend app.",
+      "reason": "The BuildRequest is for an offline-only documentation hub and OTP playground; it does not request authentication/Internet Identity integration.",
+      "evidence": [
+        "frontend/src/main.tsx",
+        "frontend/src/hooks/useInternetIdentity.ts"
+      ]
+    },
+    {
+      "description": "React Query-based backend actor creation hook (network-capable integration with an IC canister).",
+      "reason": "The BuildRequest does not ask for backend calls/actor wiring for this documentation/playground experience; adding actor creation and query invalidation is out of scope and could introduce network behavior unrelated to OTP extraction.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Motoko backend canister stub (empty actor).",
+      "reason": "No backend functionality was requested for the documentation hub or OTP playground; an empty backend module is not part of the stated requirements.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "An additional CSS theme file at frontend/index.css that appears unrelated to the applied theme imported by the app.",
+      "reason": "The app imports ./index.css from frontend/src/main.tsx; adding a second top-level frontend/index.css is not requested and may be redundant/confusing.",
+      "evidence": [
+        "frontend/index.css",
+        "frontend/src/main.tsx",
+        "frontend/src/index.css"
+      ]
+    }
+  ],
+  "confidence": 0.55,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/CodeBlock.tsx",
+    "frontend/src/components/DocSection.tsx",
+    "frontend/src/docs/docsContent.ts",
+    "frontend/src/features/playground/OtpPlayground.tsx",
+    "frontend/src/features/playground/clipboard.ts",
+    "frontend/src/features/playground/otpExtraction.ts",
+    "frontend/src/features/playground/useClipboardSettings.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
